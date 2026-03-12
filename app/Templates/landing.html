@@ -1,0 +1,40 @@
+<form action="{% url 'landing' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label>Image Upload:</label><br>
+    <input type="file" name="image" accept="image/*"><br><br>
+
+    <label>Audio Upload:</label><br>
+    <input type="file" name="audio" accept="audio/*"><br><br>
+
+    <label>Video Upload:</label><br>
+    <input type="file" name="video" accept="video/*"><br><br>
+
+    <input type="submit" value="Upload">
+</form>
+
+
+<a href="{% url 'all_data' %}"><button>All</button></a>
+
+
+{% if all_data %}
+    {% for i in all_data %}
+        <p>{{ i }}</p>
+
+        <img src="{{ i.Image.url }}" height="200" width="200">
+
+        <br><br>
+
+        <audio controls>
+            <source src="{{ i.Audio.url }}" type="audio/mpeg">
+        </audio>
+
+        <br><br>
+
+        <video width="400" controls>
+            <source src="{{ i.Video.url }}" type="video/mp4">
+        </video>
+
+        <hr>
+    {% endfor %}
+{% endif %}
+    
