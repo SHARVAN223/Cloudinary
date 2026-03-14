@@ -17,24 +17,60 @@
 
 
 {% if all_data %}
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Image</th>
+        <th>Audio</th>
+        <th>Video</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+
     {% for i in all_data %}
-        <p>{{ i }}</p>
+    <tr>
+        <td>{{forloop.counter}}</td>
 
-        <img src="{{ i.Image.url }}" height="200" width="200">
+        <td>
+            <img src="{{ i.Image.url }}" height="120" width="120">
+        </td>
 
-        <br><br>
+        <td>
+            <audio controls>
+                <source src="{{ i.Audio }}">
+            </audio>
+        </td>
 
-        <audio controls>
-            <source src="{{ i.Audio.url }}" type="audio/mpeg">
-        </audio>
+        <td>
+            <video width="200" controls>
+                <source src="{{ i.Video }}">
+            </video>
+        </td>
 
-        <br><br>
+        <td>
+            <a href="{% url 'edit' pk=i.id %}">Edit</a>
+        </td>
 
-        <video width="400" controls>
-            <source src="{{ i.Video.url }}" type="video/mp4">
-        </video>
-
-        <hr>
+        <td>
+            <a href="{% url 'delete' pk=i.id %}">Delete</a>
+        </td>
+    </tr>
     {% endfor %}
+</table>
+{% elif edit_data %}  
+<form action="{% url 'edit' pk=edit_data.id %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label>Image Upload:</label><br>
+    <input type="file" name="image" accept="image/*"><br><br>
+
+    <label>Audio Upload:</label><br>
+    <input type="file" name="audio" accept="audio/*"><br><br>
+
+    <label>Video Upload:</label><br>
+    <input type="file" name="video" accept="video/*"><br><br>
+
+    <input type="submit" value="Upload">
+</form>
 {% endif %}
+
     

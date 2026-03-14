@@ -23,4 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', landing , name='landing'),
     path('all_data/',all_data,name='all_data'),
+    path('edit/<int:pk>/',edit,name='edit'),
+    path('delete/<int:pk>/',delete,name='delete'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
